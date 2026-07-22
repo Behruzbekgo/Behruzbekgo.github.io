@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Empire — ресторан узбекской кухни в Ходжейли.">
+  <title>Empire — ресторан узбекской кухни</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #100d09;
+      --ink-soft: #18130e;
+      --ink-card: #201912;
+      --ivory: #f4ecdd;
+      --muted: #c6b9a3;
+      --gold: #b79046;
+      --gold-light: #d8b96f;
+      --line: rgba(231, 211, 171, .2);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Manrope", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--ink); color: var(--ivory); font-family: var(--sans); font-size: 15px; line-height: 1.65; }
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; }
+    ::selection { background: var(--gold); color: var(--ink); }
+
+    .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--gold-light); font-size: 10px; font-weight: 600; letter-spacing: .24em; line-height: 1; text-transform: uppercase; }
+    .eyebrow::before { content: ""; display: block; width: 28px; height: 1px; background: currentColor; }
+    .display { margin: 0; font-family: var(--serif); font-weight: 600; letter-spacing: -.035em; line-height: .95; }
+
+    /* Header */
+    header { position: absolute; z-index: 10; top: 0; left: 0; width: 100%; border-bottom: 1px solid rgba(244, 236, 221, .15); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 88px; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 26px; font-weight: 600; letter-spacing: .04em; }
+    .brand-mark { position: relative; display: grid; place-items: center; width: 33px; height: 33px; color: var(--gold-light); font-family: var(--serif); font-size: 18px; }
+    .brand-mark::before { content: ""; position: absolute; inset: 1px; border: 1px solid var(--gold); transform: rotate(45deg); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: rgba(244, 236, 221, .9); font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-phone { padding: 10px 0 10px 24px; border-left: 1px solid rgba(244, 236, 221, .25); color: var(--gold-light); }
+
+    /* Hero */
+    .hero { position: relative; display: flex; min-height: min(800px, 100svh); overflow: hidden; isolation: isolate; background: #171109; }
+    .hero::before { content: ""; position: absolute; z-index: -2; inset: 0; background: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2200&q=88") center/cover; filter: saturate(.72) brightness(.55); transform: scale(1.02); }
+    .hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(13,10,7,.89) 0%, rgba(13,10,7,.68) 48%, rgba(13,10,7,.26) 100%), linear-gradient(0deg, rgba(13,10,7,.75) 0%, transparent 42%); }
+    .hero-content { display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 180px 0 100px; }
+    .hero h1 { max-width: 790px; margin: 22px 0 26px; font-size: clamp(68px, 8.7vw, 136px); }
+    .hero h1 em { display: block; color: var(--gold-light); font-style: italic; font-weight: 500; }
+    .hero-text { max-width: 430px; margin: 0 0 36px; color: rgba(244, 236, 221, .82); font-size: 15px; }
+    .hero-footer { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-top: auto; }
+    .rating { display: flex; flex-direction: column; gap: 4px; color: rgba(244, 236, 221, .7); font-size: 12px; }
+    .rating strong { color: var(--gold-light); font-size: 16px; letter-spacing: .18em; }
+    .scroll-hint { display: flex; align-items: center; gap: 12px; color: rgba(244, 236, 221, .65); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+    .scroll-hint i { display: block; width: 44px; height: 1px; background: var(--gold); }
+
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border: 1px solid var(--gold); background: transparent; color: var(--ivory); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; transition: background .22s ease, color .22s ease, transform .22s ease; }
+    .button:hover { background: var(--gold-light); color: var(--ink); transform: translateY(-2px); }
+    .button.filled { background: var(--gold); color: var(--ink); }
+    .button.filled:hover { background: var(--gold-light); }
+    .button .arrow { margin-left: 14px; font-size: 18px; line-height: 0; }
+
+    /* About */
+    .about { padding: 132px 0; background: var(--ink); }
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(42px, 9vw, 140px); align-items: center; }
+    .about-visual { position: relative; min-height: 505px; }
+    .about-image { position: absolute; inset: 0 9% 0 0; background: url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=85") center/cover; }
+    .about-image::after { content: ""; position: absolute; inset: 0; border: 1px solid rgba(244,236,221,.2); transform: translate(18px, 18px); pointer-events: none; }
+    .about-stamp { position: absolute; right: 0; bottom: 28px; display: grid; place-items: center; width: 136px; aspect-ratio: 1; border: 1px solid var(--gold); background: var(--ink); color: var(--gold-light); font-family: var(--serif); font-size: 20px; font-style: italic; line-height: 1.1; text-align: center; transform: rotate(8deg); }
+    .about-stamp span { display: block; color: var(--muted); font-family: var(--sans); font-size: 8px; font-style: normal; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .about-copy h2 { margin: 18px 0 24px; font-size: clamp(46px, 5vw, 70px); }
+    .about-copy p { max-width: 520px; margin: 0; color: var(--muted); }
+    .about-signature { display: flex; align-items: center; gap: 16px; margin-top: 36px; color: var(--ivory); font-family: var(--serif); font-size: 24px; }
+    .about-signature::before { content: ""; width: 45px; height: 1px; background: var(--gold); }
+
+    /* Menu */
+    .menu { padding: 118px 0 128px; background: var(--ink-soft); border-block: 1px solid var(--line); }
+    .section-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 54px; }
+    .section-top h2 { margin: 18px 0 0; font-size: clamp(48px, 5vw, 74px); }
+    .menu-tabs { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: flex-end; }
+    .menu-tab { padding: 6px 0; border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; transition: color .2s, border-color .2s; }
+    .menu-tab:hover, .menu-tab.active { border-color: var(--gold); color: var(--gold-light); }
+    .menu-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(32px, 6vw, 88px); border-top: 1px solid var(--line); }
+    .dish { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 24px 0 20px; border-bottom: 1px solid var(--line); }
+    .dish h3 { margin: 0 0 4px; color: var(--ivory); font-family: var(--serif); font-size: 25px; font-weight: 600; line-height: 1; }
+    .dish p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .dish-price { padding-top: 2px; color: var(--gold-light); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .menu-bottom { display: flex; justify-content: center; margin-top: 44px; }
+
+    /* Mood strip */
+    .mood { display: grid; grid-template-columns: 1.12fr .88fr .88fr; min-height: 370px; }
+    .mood-block { position: relative; overflow: hidden; background-position: center; background-size: cover; }
+    .mood-block::after { content: ""; position: absolute; inset: 0; background: rgba(10, 8, 6, .28); transition: background .3s; }
+    .mood-block:hover::after { background: rgba(10, 8, 6, .08); }
+    .mood-block:first-child { background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1100&q=85"); }
+    .mood-block:nth-child(2) { background-image: url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"); }
+    .mood-block:last-child { background-image: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85"); }
+    .mood-copy { position: absolute; z-index: 1; inset: auto 36px 30px; max-width: 340px; }
+    .mood-copy .eyebrow { color: var(--gold-light); }
+    .mood-copy h2 { margin: 14px 0 0; font-size: clamp(36px, 3.3vw, 52px); }
+
+    /* Contacts */
+    .contacts { padding: 126px 0 74px; background: var(--ink); }
+    .contact-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(44px, 10vw, 155px); }
+    .contact-grid h2 { margin: 18px 0 34px; font-size: clamp(48px, 5vw, 72px); }
+    .contact-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .contact-list li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .contact-list span { color: var(--gold-light); font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .contact-list strong, .contact-list a { color: var(--ivory); font-family: var(--serif); font-size: 23px; font-weight: 600; line-height: 1.18; }
+    .contact-list a:hover { color: var(--gold-light); }
+    .reservation { align-self: end; padding: 36px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(183,144,70,.12), transparent 65%); }
+    .reservation h3 { margin: 13px 0; font-family: var(--serif); font-size: 35px; font-weight: 600; line-height: 1; }
+    .reservation p { margin: 0 0 24px; color: var(--muted); font-size: 13px; }
+
+    /* Footer */
+    footer { padding: 28px 0 34px; border-top: 1px solid var(--line); background: var(--ink); }
+    .footer-row { display: flex; justify-content: space-between; gap: 24px; color: #8f8372; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .footer-row a:hover { color: var(--gold-light); }
+
+    @media (max-width: 780px) {
+      .container { width: min(100% - 36px, 600px); }
+      .nav { min-height: 74px; }
+      .brand { font-size: 22px; }
+      .brand-mark { width: 28px; height: 28px; }
+      .nav-links { gap: 18px; font-size: 9px; }
+      .nav-links a:not(.nav-phone) { display: none; }
+      .nav-phone { padding-left: 16px; }
+      .hero { min-height: 700px; }
+      .hero-content { padding: 142px 0 50px; }
+      .hero h1 { font-size: clamp(59px, 17vw, 96px); }
+      .about, .menu, .contacts { padding: 82px 0; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .about-visual { min-height: 400px; }
+      .about-image { right: 7%; }
+      .section-top { align-items: start; flex-direction: column; margin-bottom: 36px; }
+      .menu-tabs { justify-content: flex-start; }
+      .menu-panel { grid-template-columns: 1fr; }
+      .mood { grid-template-columns: 1fr 1fr; }
+      .mood-block { min-height: 270px; }
+      .mood-block:first-child { grid-column: 1 / -1; }
+      .contact-list li { grid-template-columns: 88px 1fr; }
+      .reservation { padding: 28px; }
+    }
+    @media (max-width: 460px) {
+      .hero-footer { align-items: start; flex-direction: column; }
+      .scroll-hint { display: none; }
+      .mood { grid-template-columns: 1fr; }
+      .mood-block:first-child { grid-column: auto; }
+      .footer-row { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav container" aria-label="Основная навигация">
+      <a class="brand" href="#home" aria-label="Empire — на главную"><span class="brand-mark">E</span><span>EMPIRE</span></a>
+      <div class="nav-links">
+        <a href="#about">О ресторане</a>
+        <a href="#menu">Меню</a>
+        <a href="#contacts">Контакты</a>
+        <a class="nav-phone" href="tel:+998913706000">+998 91 370 60 00</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content container">
+        <div class="eyebrow">Ходжейли · Узбекская кухня</div>
+        <h1 class="display">Вкус, достойный<br><em>традиции.</em></h1>
+        <p class="hero-text">Тёплые вечера, щедрая кухня и гостеприимство, которое остаётся в памяти.</p>
+        <a class="button filled" href="#menu">Смотреть меню <span class="arrow">→</span></a>
+        <div class="hero-footer">
+          <div class="rating"><strong>★★★★★</strong><span>4.8 из 5 · по отзывам гостей</span></div>
+          <a class="scroll-hint" href="#about"><i></i> Листайте вниз</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div class="about-visual">
+          <div class="about-image" role="img" aria-label="Сервировка в Empire Restaurant"></div>
+          <div class="about-stamp">С любовью<br>к гостю<span>Empire Restaurant</span></div>
+        </div>
+        <div class="about-copy">
+          <div class="eyebrow">О ресторане</div>
+          <h2 class="display">Традиции в новом<br>прочтении.</h2>
+          <p>Empire — это место, где классика узбекской кухни звучит современно. Мы готовим плов, шашлык и лагман по проверенным рецептам, выбираем качественные продукты и создаём атмосферу, в которую хочется вернуться.</p>
+          <div class="about-signature">Добро пожаловать</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="container">
+        <div class="section-top">
+          <div>
+            <div class="eyebrow">Выбор шефа</div>
+            <h2 class="display" id="menuTitle">Основное меню</h2>
+          </div>
+          <div class="menu-tabs" role="tablist" aria-label="Категории меню">
+            <button class="menu-tab active" role="tab" aria-selected="true" data-category="hot">Горячие блюда</button>
+            <button class="menu-tab" role="tab" aria-selected="false" data-category="grill">Мангал</button>
+            <button class="menu-tab" role="tab" aria-selected="false" data-category="salad">Салаты</button>
+            <button class="menu-tab" role="tab" aria-selected="false" data-category="drinks">Напитки</button>
+          </div>
+        </div>
+        <div class="menu-panel" id="menuPanel" aria-live="polite"></div>
+        <div class="menu-bottom"><a class="button" href="https://www.instagram.com/empire_restaurant_" target="_blank" rel="noopener">Больше в Instagram <span class="arrow">→</span></a></div>
+      </div>
+    </section>
+
+    <section class="mood" aria-label="Атмосфера Empire">
+      <div class="mood-block"><div class="mood-copy"><div class="eyebrow">Вечер в Empire</div><h2 class="display">Место для<br>особенных встреч.</h2></div></div>
+      <div class="mood-block"></div>
+      <div class="mood-block"></div>
+    </section>
+
+    <section class="contacts" id="contacts">
+      <div class="container contact-grid">
+        <div>
+          <div class="eyebrow">Мы ждём вас</div>
+          <h2 class="display">Время для<br>хорошего вечера.</h2>
+          <ul class="contact-list">
+            <li><span>Адрес</span><strong>Ходжейлийская, 6/1<br>рядом с кольцевой</strong></li>
+            <li><span>Телефон</span><a href="tel:+998913706000">+998 91 370 60 00</a></li>
+            <li><span>Режим</span><strong>Ежедневно · 11:00–23:00</strong></li>
+          </ul>
+        </div>
+        <aside class="reservation">
+          <div class="eyebrow">Бронь столика</div>
+          <h3>Планируете встречу?</h3>
+          <p>Позвоните нам — мы поможем выбрать столик для семейного ужина, встречи с друзьями или важного события.</p>
+          <a class="button filled" href="tel:+998913706000">Позвонить <span class="arrow">→</span></a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© 2026 Empire Restaurant</span>
+      <a href="https://www.instagram.com/empire_restaurant_" target="_blank" rel="noopener">Instagram · @empire_restaurant_</a>
+    </div>
+  </footer>
+
+  <script>
+    const menu = {
+      hot: [
+        ["Плов", "Рис, баранина, морковь, нут и ароматные специи", "45 000"],
+        ["Лагман", "Тянутая лапша, мясо и сезонные овощи", "42 000"],
+        ["Казан-кабоб", "Томлёное мясо с картофелем и зеленью", "58 000"],
+        ["Манты", "Паровые манты с сочной мясной начинкой", "38 000"],
+        ["Димлама", "Нежное мясо и овощи, приготовленные в казане", "52 000"],
+        ["Шурпа", "Наваристый суп из баранины с овощами", "35 000"]
+      ],
+      grill: [
+        ["Шашлык из баранины", "Нежная баранина на открытом огне", "28 000"],
+        ["Шашлык из говядины", "Сочная говядина, маринованная со специями", "27 000"],
+        ["Куриный шашлык", "Нежное филе на углях", "24 000"],
+        ["Тандыр-гушт", "Мясо, медленно запечённое в тандыре", "65 000"],
+        ["Люля-кебаб", "Сочный кебаб из рубленого мяса", "25 000"],
+        ["Овощи гриль", "Баклажан, перец, томаты и зелень", "24 000"]
+      ],
+      salad: [
+        ["Бахор", "Свежие овощи, отварная говядина и зелень", "32 000"],
+        ["Ташкент", "Курица, овощи и ореховая заправка", "34 000"],
+        ["Свежие овощи", "Томаты, огурцы, зелень и лук", "22 000"],
+        ["Хрустящие баклажаны", "Баклажаны в хрустящей корочке, соус", "38 000"],
+        ["Навруз", "Весенний салат со свежей зеленью", "30 000"],
+        ["Оливье", "Классический салат с нежной телятиной", "31 000"]
+      ],
+      drinks: [
+        ["Зелёный чай", "Традиционная подача в чайнике", "12 000"],
+        ["Айран", "Освежающий кисломолочный напиток", "14 000"],
+        ["Шербет", "Домашний фруктовый напиток", "16 000"],
+        ["Компот из сухофруктов", "Домашний компот", "15 000"],
+        ["Домашний лимонад", "Цитрус, мята и ягоды", "22 000"],
+        ["Кофе", "Американо, капучино или эспрессо", "18 000"]
+      ]
+    };
+
+    const panel = document.getElementById("menuPanel");
+    const labels = { hot: "Основное меню", grill: "На открытом огне", salad: "Свежие салаты", drinks: "Напитки" };
+    function renderMenu(category) {
+      document.getElementById("menuTitle").textContent = labels[category];
+      panel.innerHTML = menu[category].map(([name, description, price]) => `
+        <article class="dish">
+          <div><h3>${name}</h3><p>${description}</p></div>
+          <span class="dish-price">${price} сум</span>
+        </article>`).join("");
+    }
+    document.querySelectorAll(".menu-tab").forEach((tab) => tab.addEventListener("click", () => {
+      document.querySelectorAll(".menu-tab").forEach((item) => { item.classList.remove("active"); item.setAttribute("aria-selected", "false"); });
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      renderMenu(tab.dataset.category);
+    }));
+    renderMenu("hot");
+  </script>
+</body>
+</html>
